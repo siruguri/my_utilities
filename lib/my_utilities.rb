@@ -10,9 +10,11 @@ module MyUtilities
 
   def self.print_help_and_exit
     puts <<EOS
-  #{__FILE__} [options]
-  #{@@help_string}
+#{__FILE__} [options]
+#{@help_string}
 EOS
+
+    exit -1
   end
 
   def self.error_exit(msg)
