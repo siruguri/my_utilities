@@ -49,7 +49,7 @@ EOS
       key_of["--#{long_opt}"]=k
 
       opt_array << ["--#{long_opt}," "-#{single_opt}", GetoptLong::OPTIONAL_ARGUMENT]
-    }
+    end
 
     opts = GetoptLong.new opt_array
 
@@ -58,9 +58,6 @@ EOS
     end
 
     return_array
-   end
-end
-
   end
 
   class Logger
@@ -99,7 +96,8 @@ end
         # nil if this isn't a directory we're starting from
         return nil if !Dir.exists? dir
         
-        return dir if !(Dir.entries(dir).select { |x| rx.match x and File.file? File.join(dir, x) }.empty?)
+        find_files = Dir.entries(dir).select { |x| rx.match x and File.file? File.join(dir, x) }
+        return dir unless find_files.empty?
         
         # Don't recurse if the dir's parent is the dir
         return parent_dir_match(rx, File.join(dir, "..")) if(File.expand_path(dir) != '/')
@@ -107,7 +105,7 @@ end
       end
     end
   end
-
+  
   private 
   def self.generate_option_strings
     a=generate_single_option
