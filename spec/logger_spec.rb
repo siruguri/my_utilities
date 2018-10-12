@@ -11,7 +11,7 @@ describe MyUtilities do
     
     it "prints out the help string" do
       full_help_string = "#{__FILE__} [options]\n#{@help_string}\n"
-      STDOUT.should_receive(:puts).with(/#{@help_string}/)
+      expect(STDOUT).to receive(:puts).with(/#{@help_string}/)
       lambda { MyUtilities::print_help_and_exit }.should raise_error(SystemExit)
     end
   end
@@ -27,13 +27,13 @@ describe MyUtilities do
     end
 
     it "only shows fatal message by default" do
-      STDOUT.should_receive(:puts).with(@exp_mesg)
+      expect(STDOUT).to receive(:puts).with(@exp_mesg)
       @logger_default.puts(@exp_mesg, MyUtilities::Logger::FATAL)
     end
 
     context "level is init'ed (to WARN)" do
       it "won't print debug messages" do
-        STDOUT.should_not_receive(:puts)
+        expect(STDOUT).not_to receive(:puts)
         @logger_by_level.puts(@exp_mesg, MyUtilities::Logger::DEBUG)
       end
 
